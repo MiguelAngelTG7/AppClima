@@ -54,11 +54,13 @@ const Weather = () => {
 
           console.log(data)
           const icon = allIcons[data.weather[0].icon] || clear_icon;
-          setWeatherData({
+
+            setWeatherData({
               humidity: data.main.humidity,
               windSpeed: data.wind.speed,
               temperature: Math.floor(data.main.temp),
               location: data.name,
+              country: data.sys.country,
               icon: icon
             })
 
@@ -79,19 +81,21 @@ const Weather = () => {
 
   return (
     <div className='weather'>
-        <div className='search-bar'>
+       <div className='tittle-app'>My Wheater App</div>
+       <div className='search-bar'>
             <input ref={inputRef} type="text" placeholder='Ciudad'/>
             <img src={search_icon} alt="" onClick={()=>search(inputRef.current.value)} />
-        </div>
+       </div>
 
-
+        
         {weatherData?
         
         <>
         
-          <img src={weatherData.icon} alt="" className='weather_icon'/>
+        <img src={weatherData.icon} alt="" className='weather_icon'/>
         <p className='temperature'>{weatherData.temperature}°C</p>
         <p className='location'>{weatherData.location}</p>
+        <p className='country'>{weatherData.country}</p>
         <div className='weather-data'>
            
             <div className='col'>
