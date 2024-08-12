@@ -73,7 +73,7 @@ const Weather = () => {
   }
 
     useEffect(()=>{
-        search("")
+        search("Lima")
 
     },[])
 
