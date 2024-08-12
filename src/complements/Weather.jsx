@@ -14,7 +14,7 @@ const Weather = () => {
 
   const inputRef = useRef()
 
-  const [weatherData, setWeatherData] = useState(false);
+  const [weatherData, setWeatherData] = useState(0);
 
   const allIcons = {
     "01d": clear_icon,
@@ -37,7 +37,7 @@ const Weather = () => {
   const search = async (city)=> {
 
     if(city === ""){
-      alert("Ingresa el Nombre de la Ciudad");
+      alert("Ingresa el Nombre de Ciudad");
       return;
     }
 
@@ -73,7 +73,7 @@ const Weather = () => {
   }
 
     useEffect(()=>{
-        search("Lima")
+        search("")
 
     },[])
 
