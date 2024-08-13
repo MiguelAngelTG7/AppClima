@@ -1,6 +1,7 @@
 import React, { useEffect, useRef, useState } from 'react'
 import './Weather.css'
 import search_icon from '../assets/search.png'
+import weather_icon3 from '../assets/weather_icon3.png'
 import clear_icon from '../assets/clear.png'
 import cloud_icon from '../assets/cloud.png'
 import drizzle_icon from '../assets/drizzle.png'
@@ -86,7 +87,12 @@ const Weather = () => {
   //Hace el Diseño de la App visible para el usuario
   return (
     <div className='weather'>
-       <div className='tittle-app'>El Tiempo®</div>
+      
+       <div className='encabezado'>
+       <img className='logo-app' src={weather_icon3} alt="" />
+       <div className='tittle-app'>Clima-X</div>
+       </div>
+
        <div className='search-bar'>
             <input ref={inputRef} type="text" placeholder='Ciudad'/>
             <img src={search_icon} alt="" onClick={()=>search(inputRef.current.value)} />
@@ -98,7 +104,7 @@ const Weather = () => {
         
         <>
         
-        <img src={weatherData.icon} alt="" className='weather_icon'/>
+        <img src={weatherData.icon} alt="" className='weather-icon'/>
         <p className='temperature'>{weatherData.temperature}°C</p>
         <p className='location'>{weatherData.location}</p>
         <p className='country'>{weatherData.country}</p>

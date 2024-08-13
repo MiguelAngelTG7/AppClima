@@ -12,6 +12,7 @@
     display: flex;
     align-items: center;
     gap: 12px;
+    padding-bottom: 20px;
 }
 
 .search-bar input {
@@ -19,7 +20,7 @@
     border: none;
     outline: none;
     border-radius: 40px;
-    padding-left: 25px;
+    padding-left: 20px;
     color: #626262;
     background: #ebfffc;
     font-size: 18px;
@@ -34,24 +35,23 @@
 }
 
 .weather-icon {
-    width: 100px;
-    margin: 30px 0;
+    width: 150px;
 }
 
 .temperature {
     color: #fff;
-    font-size: 80px;
+    font-size: 60px;
     line-height: 1;
 }
 
 .location {
     color: #fff;
-    font-size: 40px;
+    font-size: 30px;
 }
 
 .country {
     color: #fff;
-    font-size: 20px;
+    font-size: 15px;
 }
 
 .weather-data {
@@ -80,8 +80,20 @@
     margin-top: 10px;
 }
 
+.encabezado {
+    display: flex;
+    gap: 10px;  
+    padding-bottom: 40px;
+
+}
+
 .tittle-app {
     color: #fff;
     font-size: 40px;
-    padding: 0px 0px 30px 0px;
+    font-family: "Paytone One", sans-serif;
 }
+
+.logo-app {
+  width: 50px;
+  
+
