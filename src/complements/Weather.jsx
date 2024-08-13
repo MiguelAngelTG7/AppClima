@@ -81,7 +81,7 @@ const Weather = () => {
 
   return (
     <div className='weather'>
-       <div className='tittle-app'>El Clima Hoy</div>
+       <div className='tittle-app'>El Tiempo®</div>
        <div className='search-bar'>
             <input ref={inputRef} type="text" placeholder='Ciudad'/>
             <img src={search_icon} alt="" onClick={()=>search(inputRef.current.value)} />
