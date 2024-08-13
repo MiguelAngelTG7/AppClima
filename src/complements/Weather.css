@@ -96,5 +96,11 @@
 .logo-app {
   width: 50px;
 }
+
+.location-country {
+    display: flex;
+    gap: 5px;  
+    padding-bottom: px; 
+}
   
 
