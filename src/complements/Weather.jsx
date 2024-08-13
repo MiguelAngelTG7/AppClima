@@ -34,27 +34,31 @@ const Weather = () => {
 
   }
 
+  //Obtiene los datos de la API del clima
   const search = async (city)=> {
 
+    //Alerta cuando la búsqueda se hace sobre una entrada de país vacía
     if(city === ""){
       alert("Ingresa el Nombre de Ciudad");
       return;
     }
-
+    //Obtiene datos especificos de la API
       try {
           const url =`https://api.openweathermap.org/data/2.5/weather?q=${city}&units=metric&appid=${import.meta.env.VITE_APP_ID}`;
 
           const response = await fetch(url);
           const data = await response.json();
 
+          //Alerta de sistema cuando el nombre de la ciudad es incorrecto o no existe
           if(!response.ok){
               alert(data.message);
               return;
           }
 
-          console.log(data)
+          //Obtiene los codigos de iconos de la API
           const icon = allIcons[data.weather[0].icon] || clear_icon;
 
+            //Obtiene los datos del clima
             setWeatherData({
               humidity: data.main.humidity,
               windSpeed: data.wind.speed,
@@ -64,7 +68,7 @@ const Weather = () => {
               icon: icon
             })
 
-
+      //Se muestra cuando hay un error al traer los datos del Clima de la API
       } catch (error) {
         
         setWeatherData(false);
@@ -73,12 +77,13 @@ const Weather = () => {
       }
 
   }
-
+    //Actuaiza cada vez que se cambia el nombre de la ciudad en búsqueda
     useEffect(()=>{
         search("Lima")
 
     },[])
 
+  //Hace el Diseño de la App visible para el usuario
   return (
     <div className='weather'>
        <div className='tittle-app'>El Tiempo®</div>
@@ -87,8 +92,9 @@ const Weather = () => {
             <img src={search_icon} alt="" onClick={()=>search(inputRef.current.value)} />
        </div>
 
-        
         {weatherData?
+        
+        /*Si la entrada es correcta entonces procede lo siguiente*/
         
         <>
         
