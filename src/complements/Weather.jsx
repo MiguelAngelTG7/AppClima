@@ -52,7 +52,7 @@ const Weather = () => {
 
           //Alerta de sistema cuando el nombre de la ciudad es incorrecto o no existe
           if(!response.ok){
-              alert(data.message);
+              alert("Ingresar una Ciudad Existente");
               return;
           }
 
