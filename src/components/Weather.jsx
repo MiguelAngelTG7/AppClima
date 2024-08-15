@@ -14,6 +14,7 @@ import humidity_icon from '../assets/humidity.png'
 const Weather = () => {
   const inputRef = useRef();
   const [weatherData, setWeatherData] = useState(0);
+  const [location, setLocation] = useState({ latitude: null, longitude: null });
   const [city, setCity] = useState('');
   const [error, setError] = useState(null);
 
@@ -67,31 +68,68 @@ const Weather = () => {
     }
   };
 
-  // Obtiene la ciudad automáticamente usando la API de geolocalización basada en IP
+//Actuaiza cada vez que se cambia el nombre de la ciudad en búsqueda
+    useEffect(()=>{
+      search("Lima")
+
+  },[])
+
+
+  // Obtiene la ciudad automáticamente usando geolocalización
+  useEffect(() => {
+    const getLocation = () => {
+      if (navigator.geolocation) {
+        navigator.geolocation.getCurrentPosition(
+          (position) => {
+            setLocation({
+              latitude: position.coords.latitude,
+              longitude: position.coords.longitude,
+            });
+          },
+          (error) => {
+            setError(error.message);
+          }
+        );
+      } else {
+        setError('La geolocalización no es soportada por este navegador.');
+      }
+    };
+
+    getLocation();
+  }, []);
+
   useEffect(() => {
     const fetchCity = async () => {
-      try {
-        const response = await fetch('https://ipinfo.io/json?token=7ab120bbb82274');
-        const data = await response.json();
-        const detectedCity = data.city || 'Ciudad no encontrada';
-        setCity(detectedCity);
-        search(detectedCity); // Realiza la búsqueda del clima para la ciudad detectada
-      } catch (error) {
-        setError('Error al obtener los datos de la ciudad.');
+      if (location.latitude && location.longitude) {
+        try {
+          const response = await fetch(
+            `https://api.opencagedata.com/geocode/v1/json?q=${location.latitude}+${location.longitude}&key=1780e6a5702348d3a8dea7f7525ac695`);
+          const data = await response.json();
+          if (data.results.length > 0) {
+            const detectedCity = data.results[0].components.city || 
+                                data.results[0].components.town || 
+                                data.results[0].components.village || 
+                                'Ciudad no encontrada';
+            setCity(detectedCity);
+       
+          }
+        } catch (error) {
+          setError('Error al obtener los datos de la ciudad.');
+        }
       }
     };
 
     fetchCity();
-  }, []);
+  }, [location]);
 
 // Maneja el evento de la tecla ENTER
-const handleKeyDown = (event) => {
+    const handleKeyDown = (event) => {
     if (event.key === 'Enter') {
-      search(inputRef.current.value);
-    }
-  };
+    search(inputRef.current.value);
+  }
+};
 
-return (
+  return (
     <div className='weather'>
       <div className='encabezado'>
         <img className='logo-app' src={weather_icon} alt="" />
@@ -101,18 +139,22 @@ return (
         <img className='location-img' src={location_icon} alt="" />
         <p>{city}</p> {/* Mostrar la ciudad detectada */}
       </div>
+
       <div className='search-bar'>
-        <input ref={inputRef}
-         type="text" 
-         placeholder='Ciudad'
-         onKeyDown={handleKeyDown} // Evento para manejar ENTER
+        <input 
+          ref={inputRef} 
+          type="text" 
+          placeholder='Ciudad' 
+          onKeyDown={handleKeyDown} // Evento para manejar ENTER
         />
-        <img className='search-bar-img' 
-        src={search_icon} 
-        alt=""  
-        onClick={() => search(inputRef.current.value)} 
+        <img 
+          className='search-bar-img'  
+          src={search_icon} 
+          alt="" 
+          onClick={() => search(inputRef.current.value)} 
         />
       </div>
+
 
       {weatherData ?
         <>
