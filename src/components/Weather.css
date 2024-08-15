@@ -1,6 +1,7 @@
 .weather {
     place-self: center;
     padding: 40px;
+    margin-top: 10px;
     border-radius: 10px;
     background-image: linear-gradient(45deg, #4c5670, #4d3780);
     display: flex;
@@ -15,6 +16,38 @@
     padding-bottom: 20px;
 }
 
+.encabezado {
+    display: flex;
+    gap: 10px;  
+    padding-bottom: 10px;
+
+}
+
+.logo-app {
+    width: 50px;
+  }
+
+.tittle-app {
+    color: #fff;
+    font-size: 40px;
+    font-family: "Paytone One", sans-serif;
+}
+
+
+.geolocalizacion{
+    display: flex;
+    gap: 10px;  
+    padding-bottom: 10px;
+    align-items: center;
+    color: white;
+    font-size: small;
+}
+
+.location-img {
+    width: 25px;
+    
+}
+
 .search-bar input {
     height: 50px;
     border: none;
@@ -26,16 +59,16 @@
     font-size: 18px;
 }
 
-.search-bar img {
-     width: 50px;
-     padding: 15px;
-     border-radius: 50%;
-     background: #ebfffc;
-     cursor: pointer;
+.search-bar-img {
+    width: 50px;
+    padding: 15px;
+    border-radius: 50%;
+    background: #ebfffc;
+    cursor: pointer;
 }
 
 .weather-icon {
-    width: 150px;
+    width: 160px;
 }
 
 .temperature {
@@ -54,9 +87,15 @@
     font-size: 15px;
 }
 
+.location-country {
+    display: flex;
+    gap: 5px;  
+}
+  
+
 .weather-data {
     width: 100%;
-    margin-top: 40px;
+    margin-top: 10px;
     color: #fff;
     display: flex;
     justify-content: space-between;
@@ -66,7 +105,7 @@
     display: flex;
     align-items: flex-start;
     gap: 20px;
-    font-size: 22px;
+    font-size: 16px;
 }
 
 
@@ -80,27 +119,5 @@
     margin-top: 10px;
 }
 
-.encabezado {
-    display: flex;
-    gap: 10px;  
-    padding-bottom: 40px;
 
-}
-
-.tittle-app {
-    color: #fff;
-    font-size: 40px;
-    font-family: "Paytone One", sans-serif;
-}
-
-.logo-app {
-  width: 50px;
-}
-
-.location-country {
-    display: flex;
-    gap: 5px;  
-    padding-bottom: px; 
-}
-  
 

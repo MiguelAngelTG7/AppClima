@@ -1,6 +1,8 @@
 import React from 'react'
-import Weather from './complements/Weather'
+
+import Weather from './components/Weather'
 import background from './assets/background.png'
+
 
 
 
@@ -12,4 +14,8 @@ const App = () => {
   )
 }
 
+
+
 export default App
+
+
