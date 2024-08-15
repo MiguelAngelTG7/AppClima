@@ -9,17 +9,10 @@
     align-items: center;
 }
 
-.search-bar{
-    display: flex;
-    align-items: center;
-    gap: 12px;
-    padding-bottom: 20px;
-}
-
 .encabezado {
     display: flex;
     gap: 10px;  
-    padding-bottom: 10px;
+    padding-bottom: 20px;
 
 }
 
@@ -29,22 +22,28 @@
 
 .tittle-app {
     color: #fff;
-    font-size: 40px;
+    font-size: 50px;
     font-family: "Paytone One", sans-serif;
 }
 
+.search-bar{
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding-bottom: 20px;
+}
 
 .geolocalizacion{
     display: flex;
     gap: 10px;  
-    padding-bottom: 10px;
+    padding-bottom: 20px;
     align-items: center;
     color: white;
     font-size: small;
 }
 
 .location-img {
-    width: 25px;
+    width: 20px;
     
 }
 
@@ -95,7 +94,7 @@
   
 
 .weather-data {
-    width: 100%;
+    width: 85%;
     margin-top: 20px;
     color: #fff;
     display: flex;
