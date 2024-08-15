@@ -17,7 +17,7 @@ const Weather = () => {
   const [location, setLocation] = useState({ latitude: null, longitude: null });
   const [city, setCity] = useState('');
   const [error, setError] = useState(null);
-  const [isCelsius, setIsCelsius] = useState(true); // Estado para controlar la unidad de temperatura
+  const [isFahrenheit, setIsFahrenheit] = useState(false); // Estado para el cambio de °C a °F
 
   const allIcons = {
     "01d": clear_icon,
@@ -34,6 +34,11 @@ const Weather = () => {
     "10n": rain_icon,
     "13d": snow_icon,
     "13n": snow_icon,
+  };
+
+  // Convierte la temperatura a Fahrenheit si es necesario
+  const getTemperature = (tempCelsius) => {
+    return isFahrenheit ? Math.floor(tempCelsius * 9/5 + 32) : tempCelsius;
   };
 
   // Obtiene los datos de la API del clima
@@ -69,10 +74,7 @@ const Weather = () => {
     }
   };
 
-  // Actualiza cada vez que se cambia el nombre de la ciudad en búsqueda
-  useEffect(() => {
-    search("Lima");
-  }, []);
+ 
 
   // Obtiene la ciudad automáticamente usando geolocalización
   useEffect(() => {
@@ -127,20 +129,22 @@ const Weather = () => {
     }
   };
 
-  // Convierte la temperatura entre Celsius y Fahrenheit
-  const toggleTemperatureUnit = () => {
-    if (weatherData) {
-      const newTemp = isCelsius
-        ? Math.floor((weatherData.temperature * 9/5) + 32) // Convierte a Fahrenheit
-        : Math.floor((weatherData.temperature - 32) * 5/9); // Convierte a Celsius
-
-      setWeatherData({
-        ...weatherData,
-        temperature: newTemp,
-      });
-      setIsCelsius(!isCelsius); // Cambia el estado de la unidad de temperatura
-    }
+  // Maneja el clic para cambiar la temperatura de °C a °F y viceversa
+  const handleTemperatureClick = () => {
+    setIsFahrenheit(true);
+    document.body.style.cursor = 'pointer';
   };
+
+  // Maneja el soltar el clic para volver a °C
+  const handleTemperatureRelease = () => {
+    setIsFahrenheit(false);
+    document.body.style.cursor = 'default';
+  };
+
+ // Actualiza cada vez que se cambia el nombre de la ciudad en búsqueda
+ useEffect(() => {
+  search("Lima");
+}, []);
 
   return (
     <div className='weather'>
@@ -168,14 +172,15 @@ const Weather = () => {
         />
       </div>
 
-      {weatherData ?
+      {weatherData ? (
         <>
           <img src={weatherData.icon} alt="" className='weather-icon' />
-          <p 
-            className='temperature' 
-            onClick={toggleTemperatureUnit} // Agrega el evento onClick
+          <p
+            className='temperature'
+            onMouseDown={handleTemperatureClick}
+            onMouseUp={handleTemperatureRelease}
           >
-            {weatherData.temperature}°{isCelsius ? 'C' : 'F'}
+            {getTemperature(weatherData.temperature)}°{isFahrenheit ? 'F' : 'C'}
           </p>
 
           <div className='location-country'>
@@ -200,7 +205,8 @@ const Weather = () => {
               </div>
             </div>
           </div>
-        </> : <></>}
+        </>
+      ) : <></>}
     </div>
   );
 }
