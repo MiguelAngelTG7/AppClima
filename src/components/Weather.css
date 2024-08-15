@@ -11,13 +11,13 @@
 
 .encabezado {
     display: flex;
-    gap: 10px;  
     padding-bottom: 20px;
 
 }
 
 .logo-app {
-    width: 50px;
+    width: 65px;
+    height: 65px;
   }
 
 .tittle-app {
