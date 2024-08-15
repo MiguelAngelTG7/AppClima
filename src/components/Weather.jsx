@@ -84,7 +84,14 @@ const Weather = () => {
     fetchCity();
   }, []);
 
-  return (
+// Maneja el evento de la tecla ENTER
+const handleKeyDown = (event) => {
+    if (event.key === 'Enter') {
+      search(inputRef.current.value);
+    }
+  };
+
+return (
     <div className='weather'>
       <div className='encabezado'>
         <img className='logo-app' src={weather_icon} alt="" />
@@ -95,8 +102,16 @@ const Weather = () => {
         <p>{city}</p> {/* Mostrar la ciudad detectada */}
       </div>
       <div className='search-bar'>
-        <input ref={inputRef} type="text" placeholder='Ciudad' />
-        <img className='search-bar-img' src={search_icon} alt="" onClick={() => search(inputRef.current.value)} />
+        <input ref={inputRef}
+         type="text" 
+         placeholder='Ciudad'
+         onKeyDown={handleKeyDown} // Evento para manejar ENTER
+        />
+        <img className='search-bar-img' 
+        src={search_icon} 
+        alt=""  
+        onClick={() => search(inputRef.current.value)} 
+        />
       </div>
 
       {weatherData ?
