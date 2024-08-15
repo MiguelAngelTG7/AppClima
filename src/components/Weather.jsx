@@ -1,22 +1,23 @@
-import React, { useEffect, useRef, useState } from 'react'
-import './Weather.css'
-import search_icon from '../assets/search.png'
-import weather_icon from '../assets/weather_icon.png'
-import location_icon from '../assets/location.png'
-import clear_icon from '../assets/clear.png'
-import cloud_icon from '../assets/cloud.png'
-import drizzle_icon from '../assets/drizzle.png'
-import rain_icon from '../assets/rain.png'
-import snow_icon from '../assets/snow.png'
-import wind_icon from '../assets/wind.png'
-import humidity_icon from '../assets/humidity.png'
+import React, { useEffect, useRef, useState } from 'react';
+import './Weather.css';
+import search_icon from '../assets/search.png';
+import weather_icon from '../assets/weather_icon.png';
+import location_icon from '../assets/location.png';
+import clear_icon from '../assets/clear.png';
+import cloud_icon from '../assets/cloud.png';
+import drizzle_icon from '../assets/drizzle.png';
+import rain_icon from '../assets/rain.png';
+import snow_icon from '../assets/snow.png';
+import wind_icon from '../assets/wind.png';
+import humidity_icon from '../assets/humidity.png';
 
 const Weather = () => {
   const inputRef = useRef();
-  const [weatherData, setWeatherData] = useState(0);
+  const [weatherData, setWeatherData] = useState(null);
   const [location, setLocation] = useState({ latitude: null, longitude: null });
   const [city, setCity] = useState('');
   const [error, setError] = useState(null);
+  const [isCelsius, setIsCelsius] = useState(true); // Estado para controlar la unidad de temperatura
 
   const allIcons = {
     "01d": clear_icon,
@@ -68,12 +69,10 @@ const Weather = () => {
     }
   };
 
-//Actuaiza cada vez que se cambia el nombre de la ciudad en búsqueda
-    useEffect(()=>{
-      search("Lima")
-
-  },[])
-
+  // Actualiza cada vez que se cambia el nombre de la ciudad en búsqueda
+  useEffect(() => {
+    search("Lima");
+  }, []);
 
   // Obtiene la ciudad automáticamente usando geolocalización
   useEffect(() => {
@@ -111,7 +110,6 @@ const Weather = () => {
                                 data.results[0].components.village || 
                                 'Ciudad no encontrada';
             setCity(detectedCity);
-       
           }
         } catch (error) {
           setError('Error al obtener los datos de la ciudad.');
@@ -122,12 +120,27 @@ const Weather = () => {
     fetchCity();
   }, [location]);
 
-// Maneja el evento de la tecla ENTER
-    const handleKeyDown = (event) => {
+  // Maneja el evento de la tecla ENTER
+  const handleKeyDown = (event) => {
     if (event.key === 'Enter') {
-    search(inputRef.current.value);
-  }
-};
+      search(inputRef.current.value);
+    }
+  };
+
+  // Convierte la temperatura entre Celsius y Fahrenheit
+  const toggleTemperatureUnit = () => {
+    if (weatherData) {
+      const newTemp = isCelsius
+        ? Math.floor((weatherData.temperature * 9/5) + 32) // Convierte a Fahrenheit
+        : Math.floor((weatherData.temperature - 32) * 5/9); // Convierte a Celsius
+
+      setWeatherData({
+        ...weatherData,
+        temperature: newTemp,
+      });
+      setIsCelsius(!isCelsius); // Cambia el estado de la unidad de temperatura
+    }
+  };
 
   return (
     <div className='weather'>
@@ -155,11 +168,15 @@ const Weather = () => {
         />
       </div>
 
-
       {weatherData ?
         <>
           <img src={weatherData.icon} alt="" className='weather-icon' />
-          <p className='temperature'>{weatherData.temperature}°C</p>
+          <p 
+            className='temperature' 
+            onClick={toggleTemperatureUnit} // Agrega el evento onClick
+          >
+            {weatherData.temperature}°{isCelsius ? 'C' : 'F'}
+          </p>
 
           <div className='location-country'>
             <p className='location'>{weatherData.location}</p>
