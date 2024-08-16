@@ -9,8 +9,8 @@ import background from './assets/background.png'
 const App = () => {
   return (
     <div style={{ backgroundImage: `url(${background})`,
-                  backgroundRepeat: "repeat",
-                  backgroundSize: "cover" }} className='app'>
+                  backgroundRepeat: "no-repeat",
+                  backgroundSize: "contain" }} className='app'>
       <Weather/>
     </div>
   )
