@@ -157,10 +157,10 @@ const Weather = () => {
         <img className='logo-app' src={weather_icon} alt="" />
         <div className='tittle-app'>Clima-X</div>
       </div>
-      <div className='geolocalizacion'>
+      
+      {/*<div className='geolocalizacion'>
         <img className='location-img' src={location_icon} alt="" />
-        <p>{city}</p> {/* Mostrar la ciudad detectada */}
-      </div>
+        <p>{city}</p> */}
 
       <div className='search-bar'>
         <input 
