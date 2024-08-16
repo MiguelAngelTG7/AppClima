@@ -10,7 +10,7 @@ const App = () => {
   return (
     <div style={{ backgroundImage: `url(${background})`,
                   backgroundRepeat: "no-repeat",
-                  backgroundSize: "contain" }} className='app'>
+                  backgroundSize: "cover" }} className='app'>
       <Weather/>
     </div>
   )
