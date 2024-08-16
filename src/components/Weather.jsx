@@ -74,8 +74,6 @@ const Weather = () => {
     }
   };
 
- 
-
   // Obtiene la ciudad automáticamente usando geolocalización
   useEffect(() => {
     const getLocation = () => {
@@ -107,11 +105,18 @@ const Weather = () => {
             `https://api.opencagedata.com/geocode/v1/json?q=${location.latitude}+${location.longitude}&key=1780e6a5702348d3a8dea7f7525ac695`);
           const data = await response.json();
           if (data.results.length > 0) {
-            const detectedCity = data.results[0].components.city || 
+            let detectedCity = data.results[0].components.city || 
                                 data.results[0].components.town || 
                                 data.results[0].components.village || 
                                 'Ciudad no encontrada';
+
+            // Si la ciudad detectada es "Lima Metropolitan Area", cambiarla a "Lima"
+            if (detectedCity === "Lima Metropolitan Area") {
+              detectedCity = "Lima";
+            }
+
             setCity(detectedCity);
+            search(detectedCity); // Realiza la búsqueda del clima para la ciudad detectada
           }
         } catch (error) {
           setError('Error al obtener los datos de la ciudad.');
@@ -141,10 +146,10 @@ const Weather = () => {
     document.body.style.cursor = 'default';
   };
 
- // Actualiza cada vez que se cambia el nombre de la ciudad en búsqueda
- useEffect(() => {
-  search("Lima");
-}, []);
+  // Actualiza cada vez que se cambia el nombre de la ciudad en búsqueda
+  useEffect(() => {
+    search("Lima");
+  }, []);
 
   return (
     <div className='weather'>

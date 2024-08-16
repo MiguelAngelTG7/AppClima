@@ -12,7 +12,6 @@
 .encabezado {
     display: flex;
     padding-bottom: 20px;
-
 }
 
 .logo-app {
@@ -26,17 +25,12 @@
     font-family: "Paytone One", sans-serif;
 }
 
-.search-bar{
-    display: flex;
-    align-items: center;
-    gap: 12px;
-    padding-bottom: 20px;
-}
-
 .geolocalizacion{
     display: flex;
-    gap: 10px;  
+    flex-direction: row;
+    gap: 4px;  
     padding-bottom: 20px;
+    margin-left: -230px;
     align-items: center;
     color: white;
     font-size: small;
@@ -44,7 +38,13 @@
 
 .location-img {
     width: 20px;
-    
+}
+
+.search-bar{
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding-bottom: 20px;
 }
 
 .search-bar input {
