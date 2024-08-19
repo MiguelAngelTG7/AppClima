@@ -2,7 +2,7 @@ import React, { useEffect, useRef, useState } from 'react';
 import './Weather.css';
 import search_icon from '../assets/search.png';
 import weather_icon from '../assets/weather_icon.png';
-//import location_icon from '../assets/location.png';
+import location_icon from '../assets/location.png';
 import clear_icon from '../assets/clear.png';
 import cloud_icon from '../assets/cloud.png';
 import drizzle_icon from '../assets/drizzle.png';
@@ -158,9 +158,11 @@ const Weather = () => {
         <div className='tittle-app'>Clima-X</div>
       </div>
       
-      {/*<div className='geolocalizacion'>
+      <div className='geolocalizacion'>
         <img className='location-img' src={location_icon} alt="" />
-        <p>{city}</p> */}
+        <p>{city}</p>
+      </div>
+
 
       <div className='search-bar'>
         <input 

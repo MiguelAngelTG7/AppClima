@@ -12,7 +12,6 @@
 
 .encabezado {
     display: flex;
-    padding-bottom: 20px;
 }
 
 .logo-app {
@@ -37,7 +36,7 @@
 }
 
 .location-img {
-    width: 20px;
+    width: 15px;
 }
 
 .search-bar{
@@ -108,13 +107,13 @@
     display: flex;
     align-items: flex-start;
     gap:5px;
-    font-size: 16px;
+    font-size: 14px;
 }
 
 
 .weather-data .col span {
     display: block;
-    font-size: 14px;
+    font-size: 12px;
 }
 
 .weather-data .col img {
