@@ -1,4 +1,5 @@
 import React, { useEffect, useRef, useState } from 'react';
+import Swal from 'sweetalert2'; // Importa SweetAlert2
 import './Weather.css';
 import search_icon from '../assets/search.png';
 import weather_icon from '../assets/weather_icon.png';
@@ -44,7 +45,11 @@ const Weather = () => {
   // Obtiene los datos de la API del clima
   const search = async (city) => {
     if (city === "") {
-      alert("Ingresa el Nombre de Ciudad");
+      Swal.fire({
+        icon: "error",
+        title: "Oops...",
+        text: "No se hizo ningún Ingreso",
+      });
       return;
     }
     try {
@@ -53,9 +58,15 @@ const Weather = () => {
       const data = await response.json();
 
       if (!response.ok) {
-        alert("Ingresar una Ciudad Existente");
+        Swal.fire({
+          icon: "error",
+          title: "Oops...",
+          text: "Ingresar una Ciudad Existente",
+        });
         return;
       }
+
+      console.log(data);
 
       const icon = allIcons[data.weather[0].icon] || clear_icon;
 
@@ -69,6 +80,11 @@ const Weather = () => {
       });
 
     } catch (error) {
+      Swal.fire({
+        icon: "error",
+        title: "Oops...",
+        text: "Error al obtener los datos del clima",
+      });
       setWeatherData(false);
       console.error("Error en fetching weather data");
     }
@@ -86,10 +102,20 @@ const Weather = () => {
             });
           },
           (error) => {
+            Swal.fire({
+              icon: "error",
+              title: "Oops...",
+              text: error.message,
+            });
             setError(error.message);
           }
         );
       } else {
+        Swal.fire({
+          icon: "error",
+          title: "Oops...",
+          text: 'La geolocalización no es soportada por este navegador.',
+        });
         setError('La geolocalización no es soportada por este navegador.');
       }
     };
@@ -119,6 +145,11 @@ const Weather = () => {
             search(detectedCity); // Realiza la búsqueda del clima para la ciudad detectada
           }
         } catch (error) {
+          Swal.fire({
+            icon: "error",
+            title: "Oops...",
+            text: "Error al obtener los datos de la ciudad.",
+          });
           setError('Error al obtener los datos de la ciudad.');
         }
       }
