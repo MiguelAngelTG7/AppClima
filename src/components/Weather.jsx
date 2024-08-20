@@ -128,7 +128,7 @@ const Weather = () => {
       if (location.latitude && location.longitude) {
         try {
           const response = await fetch(
-            `https://api.opencagedata.com/geocode/v1/json?q=${location.latitude}+${location.longitude}&key=1780e6a5702348d3a8dea7f7525ac695`);
+            `https://api.opencagedata.com/geocode/v1/json?q=${location.latitude}+${location.longitude}&key=${import.meta.env.VITE_APP_ID2}`);
           const data = await response.json();
           if (data.results.length > 0) {
             let detectedCity = data.results[0].components.city || 
