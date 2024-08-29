@@ -127,10 +127,10 @@ const Weather = ({ setBackgrounds }) => {
         <div className='tittle-app'>Clima-X</div>
       </div>
       
-      {/*<div className='geolocalizacion'>
+      <div className='geolocalizacion'>
         <img className='location-img' src={location_icon} alt="" />
-        <p>{city}</p>
-      </div>*/}
+        <p>Lima</p>
+      </div>
 
       <div className='search-bar'>
         <input 
