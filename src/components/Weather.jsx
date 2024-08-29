@@ -17,6 +17,8 @@ const Weather = ({ setBackgrounds }) => {
   const [weatherData, setWeatherData] = useState(null);
   const [city, setCity] = useState('');
   const [isFahrenheit, setIsFahrenheit] = useState(false);
+  const [location, setLocation] = useState({});
+  const [error, setError] = useState(null);
 
   const allIcons = {
     "01d": clear_icon,
@@ -116,9 +118,75 @@ const Weather = ({ setBackgrounds }) => {
     document.body.style.cursor = 'default';
   };
 
+  // Obtiene la ubicación automáticamente usando geolocalización
   useEffect(() => {
-    search("Lima"); // Realizar la búsqueda inicial para una ciudad por defecto
+    const getLocation = () => {
+      if (navigator.geolocation) {
+        navigator.geolocation.getCurrentPosition(
+          (position) => {
+            setLocation({
+              latitude: position.coords.latitude,
+              longitude: position.coords.longitude,
+            });
+          },
+          (error) => {
+            Swal.fire({
+              icon: "error",
+              title: "Oops...",
+              text: error.message,
+            });
+            setError(error.message);
+          }
+        );
+      } else {
+        Swal.fire({
+          icon: "error",
+          title: "Oops...",
+          text: 'La geolocalización no es soportada por este navegador.',
+        });
+        setError('La geolocalización no es soportada por este navegador.');
+      }
+    };
+
+    getLocation();
   }, []);
+
+  // Fetch de la ciudad utilizando la latitud y longitud obtenidas
+  useEffect(() => {
+    const fetchCity = async () => {
+      if (location.latitude && location.longitude) {
+        try {
+          const response = await fetch(
+            `https://api.opencagedata.com/geocode/v1/json?q=${location.latitude}+${location.longitude}&key=${import.meta.env.VITE_APP_ID2}`
+          );
+          const data = await response.json();
+          if (data.results.length > 0) {
+            let detectedCity = data.results[0].components.city ||
+              data.results[0].components.town ||
+              data.results[0].components.village ||
+              'Ciudad no encontrada';
+
+            // Si la ciudad detectada es "Lima Metropolitan Area", cambiarla a "Lima"
+            if (detectedCity === "Lima Metropolitan Area") {
+              detectedCity = "Lima";
+            }
+
+            setCity(detectedCity);
+            search(detectedCity); // Realiza la búsqueda del clima para la ciudad detectada
+          }
+        } catch (error) {
+          Swal.fire({
+            icon: "error",
+            title: "Oops...",
+            text: "Error al obtener los datos de la ciudad.",
+          });
+          setError('Error al obtener los datos de la ciudad.');
+        }
+      }
+    };
+
+    fetchCity();
+  }, [location]);
 
   return (
     <div className='weather'>
@@ -129,7 +197,7 @@ const Weather = ({ setBackgrounds }) => {
       
       <div className='geolocalizacion'>
         <img className='location-img' src={location_icon} alt="" />
-        <p>Lima</p>
+        <p>{city || "Ubicación no detectada"}</p>
       </div>
 
       <div className='search-bar'>
