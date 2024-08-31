@@ -18,7 +18,7 @@ const Weather = ({ setBackgrounds }) => {
   const [city, setCity] = useState('');
   const [isFahrenheit, setIsFahrenheit] = useState(false);
   const [location, setLocation] = useState({});
-  const [error, setError] = useState(null);
+  const [error, setError] = useState(null); // Estado para errores de geolocalización o API
 
   const allIcons = {
     "01d": clear_icon,
@@ -76,7 +76,7 @@ const Weather = ({ setBackgrounds }) => {
       });
 
       // Llamada a la API de Pexels para obtener imágenes de fondo
-      const pexelsUrl = `https://api.pexels.com/v1/search?query=${city}&per_page=5`; // 5 imágenes de alta calidad
+      const pexelsUrl = `https://api.pexels.com/v1/search?query=${city}&per_page=8`;
       const pexelsResponse = await fetch(pexelsUrl, {
         headers: {
           Authorization: 'pzSG0wdXcOoQyz4hU2AKvAkpfBYVkvWcsVnDXhr2uRmvFNWRWCKUe72s',
@@ -85,8 +85,8 @@ const Weather = ({ setBackgrounds }) => {
       const pexelsData = await pexelsResponse.json();
 
       if (pexelsData.photos && pexelsData.photos.length > 0) {
-        const images = pexelsData.photos.map(photo => photo.src.landscape); // Imágenes adaptadas al fondo
-        setBackgrounds(images); // Actualiza las imágenes de fondo en App
+        const images = pexelsData.photos.map(photo => photo.src.landscape);
+        setBackgrounds(images);
       } else {
         setBackgrounds([]);
       }
@@ -118,7 +118,7 @@ const Weather = ({ setBackgrounds }) => {
     document.body.style.cursor = 'default';
   };
 
-  // Obtiene la ubicación automáticamente usando geolocalización
+  // Obtiene la ciudad automáticamente usando geolocalización
   useEffect(() => {
     const getLocation = () => {
       if (navigator.geolocation) {
@@ -151,20 +151,18 @@ const Weather = ({ setBackgrounds }) => {
     getLocation();
   }, []);
 
-  // Fetch de la ciudad utilizando la latitud y longitud obtenidas
   useEffect(() => {
     const fetchCity = async () => {
       if (location.latitude && location.longitude) {
         try {
           const response = await fetch(
-            `https://api.opencagedata.com/geocode/v1/json?q=${location.latitude}+${location.longitude}&key=${import.meta.env.VITE_APP_ID2}`
-          );
+            `https://api.opencagedata.com/geocode/v1/json?q=${location.latitude}+${location.longitude}&key=${import.meta.env.VITE_APP_ID2}`);
           const data = await response.json();
           if (data.results.length > 0) {
-            let detectedCity = data.results[0].components.city ||
-              data.results[0].components.town ||
-              data.results[0].components.village ||
-              'Ciudad no encontrada';
+            let detectedCity = data.results[0].components.city || 
+                                data.results[0].components.town || 
+                                data.results[0].components.village || 
+                                'Ciudad no encontrada';
 
             // Si la ciudad detectada es "Lima Metropolitan Area", cambiarla a "Lima"
             if (detectedCity === "Lima Metropolitan Area") {
@@ -222,6 +220,7 @@ const Weather = ({ setBackgrounds }) => {
             className='temperature'
             onMouseDown={handleTemperatureClick}
             onMouseUp={handleTemperatureRelease}
+            title="Haz clic para cambiar a Fahrenheit/Celsius"
           >
             {getTemperature(weatherData.temperature)}°{isFahrenheit ? 'F' : 'C'}
           </p>
